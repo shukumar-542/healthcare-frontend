@@ -7,9 +7,9 @@ const TopRatedDoctors = async () => {
     const { data: doctors } = await res.json();
     return (
         <Box sx={{
-            my: 10, py: 30,
+            my: 10, py: 25,
             backgroundColor: "rgba(20,20,20,0.1)",
-            clipPath: "polygon(0 0, 100% 25%, 100% 100%,0 75%)"
+            clipPath: "polygon( 0 10%, 100% 20%, 100% 95%,0 85%)"
         }}>
             <Box sx={{
                 textAlign: 'center', margin: '40px 0'

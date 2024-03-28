@@ -3,7 +3,7 @@ import Specialist from "@/components/ui/HomePgae/Specialist/Specialist";
 import TopRatedDoctors from "@/components/ui/HomePgae/TopRatedDoctors/TopRatedDoctors";
 import WhyUs from "@/components/ui/HomePgae/WhyUs/WhyUs";
 
-const HomePage = () => {
+const AboutPage = () => {
   return (
     <div>
       <HeroSection/>
@@ -14,4 +14,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default AboutPage;
