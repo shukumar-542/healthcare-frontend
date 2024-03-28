@@ -23,8 +23,7 @@ const RegisterPage = () => {
                     paddingY: 2
                 }}>
 
-                    <Image src={assets.svgs.logo} width={50} height={50} alt='logo' />
-                    <Typography component='h6' fontWeight={600}>Patient Register</Typography>
+                   
                     <Box sx={{
                         width: '100%',
                         padding: "16px 25px"
