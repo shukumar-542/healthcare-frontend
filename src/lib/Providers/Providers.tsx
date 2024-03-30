@@ -1,12 +1,18 @@
 "use client"
 import { theme } from '@/lib/theme/theme';
+import { store } from '@/redux/store';
 import { ThemeProvider } from '@mui/material'
 import React from 'react';
-const Providers = ({children} :{children : React.ReactNode}) => {
+import { Provider } from 'react-redux';
+const Providers = ({ children }: { children: React.ReactNode }) => {
     return (
-    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                {children}
+            </Provider>
+        </ThemeProvider>
 
-       
+
     );
 };
 
