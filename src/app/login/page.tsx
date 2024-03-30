@@ -10,6 +10,13 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import PHForm from '@/components/Forms/PHForm';
 import PHInput from '@/components/Forms/PHInput';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+export const validationSchema = z.object({
+    email  : z.string().email('Please Enter valid email !'), 
+    password : z.string().min(6, "Password must be 6 character")
+})
 
 const LoginPage = () => {
     const router = useRouter()
@@ -43,16 +50,20 @@ const LoginPage = () => {
                 }}>
                     <Image src={assets.svgs.logo} width={50} height={50} alt='logo' />
                     <Typography component='h6' fontWeight={600}>Patient Register</Typography>
-                    <PHForm onSubmit={handleLogin}>
+                    <PHForm onSubmit={handleLogin} resolver={zodResolver(validationSchema)} defaultValues={
+                        {
+                            email : '', password : ''
+                        }
+                    } >
 
                         <Grid container spacing={2} sx={{
                             marginTop: 4
                         }}>
                             <Grid item md={6}>
-                                <PHInput fullWidth={true} label="email" name='email' type='email' />
+                                <PHInput fullWidth={true} label="email" name='email' type='email'  />
                             </Grid>
                             <Grid item md={6}>
-                                <PHInput fullWidth={true} label="password" name='password' type='password' />
+                                <PHInput fullWidth={true} label="password" name='password' type='password'   />
                             </Grid>
 
                         </Grid>

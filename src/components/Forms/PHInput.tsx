@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { SxProps, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
 type TInputProps = {
@@ -6,17 +6,23 @@ type TInputProps = {
     label?: string,
     type? : string,
     size ?: 'small' | "medium",
-    fullWidth ?: boolean
+    fullWidth ?: boolean,
+    sx? : SxProps,
+    placeholder ?: string,
+    required ?: boolean
 }
 
-const PHInput = ({name,label,type='text',size='small',fullWidth} : TInputProps) => {
+const PHInput = ({name,label,type='text',size='small',fullWidth , sx,required} : TInputProps) => {
     const {control} = useFormContext()
     return (
         <Controller
         control={control}
         name={name}
-        render={({ field}) => (
-          <TextField {...field} fullWidth={fullWidth} label={label}  variant="outlined" type={type} size={size} />
+        render={({ field , fieldState: {error}}) => (
+          <TextField {...field} sx={{...sx}} placeholder={label} fullWidth={fullWidth} label={label}  variant="outlined" type={type} size={size} required={required} 
+            error ={!!error?.message}
+            helperText={error?.message}
+          />
         )}
       />
     );

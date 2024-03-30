@@ -5,37 +5,22 @@ import Image from 'next/image';
 import React from 'react';
 import assets from '@/assets'
 import Link from 'next/link';
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form"
 import { modifyPayload } from '@/utils/modifyPayload';
 import { registerPatient } from '@/Services/actions/RegisterPatients';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { userLogin } from '@/Services/actions/UserLogin';
 import { storeUserInfo } from '@/Services/auth.service';
+import PHForm from '@/components/Forms/PHForm';
+import PHInput from '@/components/Forms/PHInput';
 
-type Inputs = {
-    name: string
-    email: string
-    password: string
-    contactNumber: string
-    address: string
-}
-
-type PatientData = {
-    password : string,
-    patient : Inputs
-}
 
 const RegisterPage = () => {
     const router = useRouter()
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm<PatientData>()
+    
 
-    const onSubmit: SubmitHandler<PatientData> = async(data) => {
+    const handleRegister = async(data : FieldValues) => {
        const newData =  modifyPayload(data);
         
     try {
@@ -78,29 +63,29 @@ const RegisterPage = () => {
                         padding: "16px 25px"
                     }}>
 
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <PHForm onSubmit={handleRegister}>
                             <Grid container spacing={2}>
                                 <Grid item md={12}>
-                                    <TextField id="outlined-basic" {...register('patient.name')} size='small' fullWidth={true} label="name" variant="outlined" />
+                                    <PHInput  name ='patient.name' required={true} fullWidth={true} label="name"  />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <TextField id="outlined-basic" {...register('patient.email')} size='small' fullWidth={true} label="email" variant="outlined" type='email' />
+                                    <PHInput  name='patient.email' required={true}  fullWidth={true} label="email" type='email' />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <TextField id="outlined-basic" {...register('password')} size='small' fullWidth={true} label="password" variant="outlined" type='password' />
+                                    <PHInput  name='password' required={true} fullWidth={true} label="password"  type='password' />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <TextField id="outlined-basic" {...register('patient.contactNumber')} size='small' fullWidth={true} label="contact" variant="outlined" type='text' />
+                                    <PHInput required={true}  name= 'patient.contactNumber' size='small' fullWidth={true} label="contact" type='text' />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <TextField id="outlined-basic" {...register('patient.address')} size='small' fullWidth={true} label="address" variant="outlined" type='text' />
+                                    <PHInput required={true} name='patient.address' fullWidth={true} label="address"   />
                                 </Grid>
                             </Grid>
 
                             <Button type='submit' fullWidth={true} sx={{
                                 marginTop: 2
                             }} >Submit</Button>
-                        </form>
+                        </PHForm>
                         <Typography sx={{
                             textAlign: 'center'
                             ,
