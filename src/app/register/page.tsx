@@ -14,8 +14,25 @@ import { userLogin } from '@/Services/actions/UserLogin';
 import { storeUserInfo } from '@/Services/auth.service';
 import PHForm from '@/components/Forms/PHForm';
 import PHInput from '@/components/Forms/PHInput';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+export const patientValidationSchema = z.object({
+    name : z.string().min(1,'Please Enter Your Name'),
+    email : z.string().email('Please Enter Email Address'),
+    contactNumber : z.string().regex(/^\d{11}$/,"Please Provide a valid phone number"),
+     address : z.string().min(1,'Please Enter Your Address')
+})
+export const validationSchema = z.object({
+    password :  z.string().min(6 , 'Password must be 6 character'),
+    patient  : patientValidationSchema
+})
 
+export const defaultValues = {
+    password : '', patient :{
+        name : '', email : '', contactNumber : '', address : ''
+    }
+}
 const RegisterPage = () => {
     const router = useRouter()
     
@@ -63,22 +80,22 @@ const RegisterPage = () => {
                         padding: "16px 25px"
                     }}>
 
-                        <PHForm onSubmit={handleRegister}>
+                        <PHForm onSubmit={handleRegister} resolver ={ zodResolver(validationSchema)} defaultValues={defaultValues} >
                             <Grid container spacing={2}>
                                 <Grid item md={12}>
-                                    <PHInput  name ='patient.name' required={true} fullWidth={true} label="name"  />
+                                    <PHInput  name ='patient.name'  fullWidth={true} label="name"  />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <PHInput  name='patient.email' required={true}  fullWidth={true} label="email" type='email' />
+                                    <PHInput  name='patient.email'   fullWidth={true} label="email" type='email' />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <PHInput  name='password' required={true} fullWidth={true} label="password"  type='password' />
+                                    <PHInput  name='password' fullWidth={true} label="password"  type='password' />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <PHInput required={true}  name= 'patient.contactNumber' size='small' fullWidth={true} label="contact" type='text' />
+                                    <PHInput  name= 'patient.contactNumber' size='small' fullWidth={true} label="contact" type='text' />
                                 </Grid>
                                 <Grid item md={6}>
-                                    <PHInput required={true} name='patient.address' fullWidth={true} label="address"   />
+                                    <PHInput  name='patient.address' fullWidth={true} label="address"   />
                                 </Grid>
                             </Grid>
 
