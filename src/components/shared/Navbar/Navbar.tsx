@@ -1,17 +1,12 @@
 "use client"
-import { getUserInfo, isLoggedIn, removeUser } from "@/Services/auth.service";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { getUserInfo } from "@/Services/auth.service";
+import { Box,  Container, Stack, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
+const AuthButton = dynamic(() => import('@/components/ui/HomePgae/AuthButton/AuthButton'), { ssr: false })
 const Navbar = () => {
     const userInfo = getUserInfo();
-    const router = useRouter()
-    const isLogged = isLoggedIn()
-    const handleLogOut = ()=>{
-        removeUser()
-        router.refresh()
-    }
+    
     return (
         <Container>
             <Stack py={2} direction="row" justifyContent="space-between" alignItems="center"  >
@@ -25,9 +20,8 @@ const Navbar = () => {
                     <Typography component={Link} href="/login">Diagnostics</Typography>
                     <Typography component={Link} href="/login">NGOs</Typography>
                 </Stack>
-
-            {isLogged ? (<Button onClick={handleLogOut}  color='error' >Logout</Button>)
-            : (<Button  href="/login" component={Link} >Login</Button>)}
+                <AuthButton/>
+            
             </Stack>
         </Container>
     );

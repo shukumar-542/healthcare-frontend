@@ -9,11 +9,13 @@ export const  getToLocalStorage = (key :  string)=>{
  if(!key || typeof window === undefined){
     return ""
  }
- return localStorage.getItem(key)
+ const getUser = localStorage.getItem(key)
+ return getUser
 }
 export const  RemoveFromToLocalStorage = (key :  string)=>{
  if(!key || typeof window === undefined){
     return ""
  }
- return localStorage.removeItem(key)
+ const removeUser = localStorage.removeItem(key)
+ return removeUser
 }
