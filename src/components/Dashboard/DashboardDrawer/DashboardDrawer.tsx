@@ -44,6 +44,9 @@ export default function DashboardDrawer({children} : {children : React.ReactNode
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          backgroundColor : '#F4F7FE',
+          boxShadow : 0,
+          borderBottom : '1px  solid lightGray'
         }}
       >
         <Toolbar>
@@ -52,13 +55,18 @@ export default function DashboardDrawer({children} : {children : React.ReactNode
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: 'none' }, color:'primary.main' }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+          <Box>
+          <Typography variant="body2" color='gray' noWrap component="div">
+            Hi, Shukumar Ghosh
           </Typography>
+          <Typography variant="body2" color='primary.main' noWrap component="div">
+            Welcome to PH Health Care
+          </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box

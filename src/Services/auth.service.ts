@@ -1,5 +1,5 @@
 import { RemoveFromToLocalStorage, getToLocalStorage, setLocalStorage } from "@/utils/localStorage"
-import { authKey } from "../../constant/authKey"
+import { authKey } from "../constant/authKey"
 import { decodeToken } from "@/utils/jwtDecode"
 
 export const storeUserInfo = (accessToken: string) => {
