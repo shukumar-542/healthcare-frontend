@@ -47,7 +47,7 @@ const RegisterPage = () => {
         const result = await userLogin({password : data.password, email: data.patient.email})
             if(result?.data?.accessToken){
                 storeUserInfo(result?.data?.accessToken)
-                router.push('/')
+                router.push('/dashboard')
             }
        }
     } catch (error : any) {
