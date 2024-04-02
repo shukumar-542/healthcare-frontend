@@ -27,7 +27,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function PHModal({children,title,open, setOpen} : modalProps) {
+export default function PHModal({children,title ='',open=false, setOpen} : modalProps) {
   
 
   
@@ -61,11 +61,7 @@ export default function PHModal({children,title,open, setOpen} : modalProps) {
         <DialogContent dividers>
           {children}
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
+        
       </BootstrapDialog>
     </React.Fragment>
   );
