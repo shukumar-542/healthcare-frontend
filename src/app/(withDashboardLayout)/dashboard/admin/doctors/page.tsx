@@ -1,19 +1,65 @@
 "use client"
-import { Box, Button, Stack, TextField } from '@mui/material';
+import { Box, Button, IconButton, Stack, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import DoctorModal from './component/DoctorModal';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import Image from 'next/image';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useGetAllDoctorsQuery } from '@/redux/api/doctorApi';
+
 
 const DoctorsPage = () => {
     const [open, setOpen] = useState(false);
-    return (
+    const { data, isLoading } = useGetAllDoctorsQuery({})
+    const doctors = data?.doctors;
+    const meta = data?.meta;
+    // console.log(data);
+    const handleDelete = async (id: string) => {
+
+        try {
+        } catch (error: any) {
+        console.log(error.message);
+    }
+}
+const columns: GridColDef[] = [
+    { field: 'name', headerName: 'Name', width: 400 , flex : 1},
+    { field: 'email', headerName: 'Email', width: 400 , flex : 1},
+    { field: 'contactNumber', headerName: 'Contact Number', width: 400 , flex : 1},
+  
+    {
+        field: 'action', headerName: 'Action', flex: 1, headerAlign: 'center', align: 'center', renderCell: ({ row }) => {
+            return <Box >
+                <IconButton aria-label="delete" onClick={() => handleDelete(row.id)} >
+                    <DeleteIcon />
+                </IconButton>
+            </Box>
+        }
+    }
+
+];
+if(isLoading){
+    return <p>Loading..</p>
+}
+return (
+    <Box>
+        <Stack direction='row' justifyContent='space-between' alignItems='center' >
+            <Button onClick={() => setOpen(true)}>Create Doctors</Button>
+            <DoctorModal open={open} setOpen={setOpen} />
+            <TextField size='small' placeholder='Search Specialties' />
+        </Stack>
+
         <Box>
-            <Stack direction='row' justifyContent='space-between' alignItems='center' >
-                <Button onClick={()=> setOpen(true)}>Create Doctors</Button>
-                <DoctorModal open={open} setOpen={setOpen} />
-                <TextField size='small' placeholder='Search Specialties' />
-            </Stack>
+            <h1>All Doctors</h1>
+
+            <DataGrid
+                rows={doctors}
+                columns={columns}
+
+
+            />
         </Box>
-    );
+    </Box>
+);
 };
 
 export default DoctorsPage;

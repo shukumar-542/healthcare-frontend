@@ -15,18 +15,20 @@ const doctorApi = baseApi.injectEndpoints({
             invalidatesTags: [tagTypes.doctor]
         }),
         getAllDoctors: build.query({
-            query: () => ({
+            query: (arg : Record<string, any>) => ({
                 url: '/doctor',
-                method: 'GET'
+                method: 'GET',
+                params : arg
             }),
-            transformResponse :(response : IDoctor, meta : IMeta)=>{
+            transformResponse :(response : IDoctor[], meta : IMeta)=>{
                 return {
                     doctors : response,
                     meta,
                 }
-            }
+            },
+            providesTags :[tagTypes.doctor]
         })
     })
 })
 
-export const { useCreateDoctorMutation } = doctorApi
+export const { useCreateDoctorMutation, useGetAllDoctorsQuery } = doctorApi
