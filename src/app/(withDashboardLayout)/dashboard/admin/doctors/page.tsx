@@ -6,11 +6,23 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Image from 'next/image';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useGetAllDoctorsQuery } from '@/redux/api/doctorApi';
+import { useDebounced } from '@/redux/hooks';
 
 
 const DoctorsPage = () => {
     const [open, setOpen] = useState(false);
-    const { data, isLoading } = useGetAllDoctorsQuery({})
+    const [searchTerm, setSearchTerm] = useState<string>('')
+    const query :  Record<string, any> = {};
+
+    const debounced = useDebounced({
+        searchQuery : searchTerm,
+        delay : 600
+    })
+    if(!!debounced){
+
+        query['searchTerm'] = searchTerm;
+    }
+    const { data, isLoading } = useGetAllDoctorsQuery({...query})
     const doctors = data?.doctors;
     const meta = data?.meta;
     // console.log(data);
@@ -24,6 +36,8 @@ const DoctorsPage = () => {
 const columns: GridColDef[] = [
     { field: 'name', headerName: 'Name', width: 400 , flex : 1},
     { field: 'email', headerName: 'Email', width: 400 , flex : 1},
+    { field: 'gender', headerName: 'Gender', width: 400 , flex : 1},
+    { field: 'apiontmentFee', headerName: 'Appointment Fee', width: 400 , flex : 1},
     { field: 'contactNumber', headerName: 'Contact Number', width: 400 , flex : 1},
   
     {
@@ -45,7 +59,7 @@ return (
         <Stack direction='row' justifyContent='space-between' alignItems='center' >
             <Button onClick={() => setOpen(true)}>Create Doctors</Button>
             <DoctorModal open={open} setOpen={setOpen} />
-            <TextField size='small' placeholder='Search Specialties' />
+            <TextField onChange={(e)=> setSearchTerm(e.target.value)} size='small' placeholder='Search Specialties' />
         </Stack>
 
         <Box>
