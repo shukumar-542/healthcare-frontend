@@ -1,11 +1,11 @@
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import dayjs from 'dayjs';
-import { SxProps } from '@mui/material';
-import { Controller, useFormContext } from 'react-hook-form';
+import { SxProps } from "@mui/material";
+import {  LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { Controller, useFormContext } from "react-hook-form";
 
-interface IDatePicker {
+
+interface ITimePicker {
     name: string,
     size?: 'small' | 'medium',
     label?: string,
@@ -13,8 +13,8 @@ interface IDatePicker {
     fullWidth?: boolean,
     sx?: SxProps
 }
-const PHDatePicker = ({ name, size = 'small', required, label, fullWidth = true, sx }: IDatePicker) => {
-    const {control} = useFormContext()    
+const PHTimePicker = ({ name, size = 'small', required, label, fullWidth = true, sx }: ITimePicker) => {
+    const {control} = useFormContext()  
     return (
         <Controller
             name={name}
@@ -23,10 +23,9 @@ const PHDatePicker = ({ name, size = 'small', required, label, fullWidth = true,
             render ={({field  :{onChange, value, ...field}}) => {
                 return (
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DesktopDatePicker 
+                        <TimePicker 
                         timezone='system'
-                        disablePast
-
+                        label={label}
                         slotProps={{
                             textField :{
                                 variant : 'outlined',
@@ -34,7 +33,7 @@ const PHDatePicker = ({ name, size = 'small', required, label, fullWidth = true,
                             }
                         }}
                         {...field}
-                        onChange={(date)=> onChange(date)}
+                        onChange={(time)=> onChange(time)}
                         value={value || Date.now()}
                         />
                     </LocalizationProvider>
@@ -44,4 +43,4 @@ const PHDatePicker = ({ name, size = 'small', required, label, fullWidth = true,
     );
 };
 
-export default PHDatePicker;
+export default PHTimePicker;
